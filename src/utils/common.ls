@@ -105,13 +105,21 @@ rm_paths = (ignore) ->
 
 create_stack = (take_only,paths = [],init_txt) ->
 
+
   EMP = rm_paths paths
 
   (E)->
 
+    if not E
+
+      l "Error: cannot show Error stack without Error object."
+
+      return
+
     E = esp.parse E
 
     if init_txt
+
       l init_txt
 
     disp = []
@@ -144,6 +152,8 @@ create_stack = (take_only,paths = [],init_txt) ->
         [0,c.warn,0,c.er,0,0,0,c.black,c.er,c.black]
 
       disp.push item
+
+    if disp.length is 0 then return
 
     disp
     |> R.reverse
